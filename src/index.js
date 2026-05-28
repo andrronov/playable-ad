@@ -1,12 +1,10 @@
 import "./style.css";
+import { Application, Container, Sprite, Assets } from "pixi.js";
 import {
-  Application,
-  Container,
-  Sprite,
-  Assets,
-  Polygon,
-  Circle,
-} from "pixi.js";
+  ITEMS_CONFIG,
+  COVERS_CONFIG,
+  playItemAnimation,
+} from "./config/index.js";
 
 import bgImg from "./assets/bg.jpg";
 
@@ -51,43 +49,6 @@ import hatImg from "./assets/covers/hat.png";
   const bgSprite = new Sprite(Assets.get("bg"));
   worldContainer.addChild(bgSprite);
 
-  const itemsConfig = [
-    {
-      id: "apple",
-      texture: "apple",
-      hitArea: new Circle(50, 50, 40),
-      lx: 818,
-      ly: 252,
-    },
-    {
-      id: "book",
-      texture: "book",
-      hitArea: new Polygon([5, 5, 20, -50, 100, 20, 195, 75, 75, 150]),
-      lx: 867,
-      ly: 694,
-    },
-    {
-      id: "bird",
-      texture: "bird",
-      hitArea: new Circle(50, 50, 40),
-      lx: 746,
-      ly: 13,
-      alpha: 0.65,
-    },
-    {
-      id: "shoe",
-      texture: "shoe",
-      hitArea: new Polygon([0, 70, 10, -50, 80, 20, 150, 85, 165, 120]),
-      lx: 691,
-      ly: 677,
-    },
-  ];
-  const coversConfig = [
-    { id: "chair", texture: "chair", lx: 877, ly: 588 },
-    { id: "cage", texture: "cage", lx: 467, ly: 681 },
-    { id: "hat", texture: "hat", lx: 811, ly: 286 },
-  ];
-
   const activeItems = [];
 
   function placeSprite(item, config, clickable) {
@@ -96,6 +57,8 @@ import hatImg from "./assets/covers/hat.png";
     item.px = config.px ?? config.lx;
     item.py = config.py ?? config.ly;
     item.alpha = config.alpha ?? 0.9;
+
+    item.anchor.set(0.5);
 
     if (clickable) {
       item.eventMode = "static";
@@ -109,18 +72,17 @@ import hatImg from "./assets/covers/hat.png";
     worldContainer.addChild(item);
   }
 
-  itemsConfig.forEach((config) => {
+  ITEMS_CONFIG.forEach((config) => {
     const item = new Sprite(Assets.get(config.texture));
 
     item.on("pointerdown", () => {
-      //
+      playItemAnimation(item);
     });
 
     placeSprite(item, config, true);
     activeItems.push(item);
   });
-
-  coversConfig.forEach((config) => {
+  COVERS_CONFIG.forEach((config) => {
     const item = new Sprite(Assets.get(config.texture));
     placeSprite(item, config, false);
     activeItems.push(item);
