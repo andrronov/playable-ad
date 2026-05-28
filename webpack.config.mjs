@@ -1,4 +1,5 @@
 import path from "path";
+import webpack from "webpack";
 import { fileURLToPath } from "url";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import HtmlInlineScriptPlugin from "html-inline-script-webpack-plugin";
@@ -12,6 +13,9 @@ export default {
   output: {
     path: path.resolve(__dirname, "dist"),
     clean: true,
+  },
+  optimization: {
+    splitChunks: false,
   },
   devServer: {
     static: "./dist",
@@ -37,6 +41,9 @@ export default {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       inject: "body",
+    }),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1,
     }),
     // new HtmlInlineScriptPlugin(),
   ],

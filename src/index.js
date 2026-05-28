@@ -1,8 +1,10 @@
 import "./style.css";
 import { Application, Container, Sprite, Assets } from "pixi.js";
+import { useUI } from "./ui.js";
 import {
   ITEMS_CONFIG,
   COVERS_CONFIG,
+  ASSETS_ALIAS,
   playItemAnimation,
 } from "./config/index.js";
 
@@ -19,6 +21,8 @@ import hatImg from "./assets/covers/hat.png";
 
 (async () => {
   const app = new Application();
+  const { loadUI, buildUI, resizeUI } = useUI();
+
   await app.init({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -28,25 +32,28 @@ import hatImg from "./assets/covers/hat.png";
     resizeTo: window,
   });
 
+  // TODO: add wrapper
   window.__PIXI_APP__ = app;
 
   document.body.appendChild(app.canvas);
 
   await Assets.load([
-    { alias: "bg", src: bgImg },
-    { alias: "apple", src: appleImg },
-    { alias: "book", src: bookImg },
-    { alias: "bird", src: birdImg },
-    { alias: "shoe", src: shoeImg },
-    { alias: "chair", src: chairImg },
-    { alias: "cage", src: cageImg },
-    { alias: "hat", src: hatImg },
+    { alias: ASSETS_ALIAS.bg, src: bgImg },
+    { alias: ASSETS_ALIAS.apple, src: appleImg },
+    { alias: ASSETS_ALIAS.book, src: bookImg },
+    { alias: ASSETS_ALIAS.bird, src: birdImg },
+    { alias: ASSETS_ALIAS.shoe, src: shoeImg },
+    { alias: ASSETS_ALIAS.chair, src: chairImg },
+    { alias: ASSETS_ALIAS.cage, src: cageImg },
+    { alias: ASSETS_ALIAS.hat, src: hatImg },
   ]);
+  await loadUI();
 
   const worldContainer = new Container();
   app.stage.addChild(worldContainer);
+  buildUI(app);
 
-  const bgSprite = new Sprite(Assets.get("bg"));
+  const bgSprite = new Sprite(Assets.get(ASSETS_ALIAS.bg));
   worldContainer.addChild(bgSprite);
 
   const activeItems = [];
@@ -111,6 +118,8 @@ import hatImg from "./assets/covers/hat.png";
       item.x = isPortrait ? item.px : item.lx;
       item.y = isPortrait ? item.py : item.ly;
     });
+
+    resizeUI(screenWidth, screenHeight);
   }
 
   resize();
