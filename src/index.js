@@ -1,6 +1,7 @@
 import "./style.css";
 import { Application, Container, Sprite, Assets } from "pixi.js";
 import { useUI } from "./ui.js";
+import { useIdleHint } from "./idle-hint.js";
 import {
   ITEMS_CONFIG,
   COVERS_CONFIG,
@@ -22,6 +23,8 @@ import hatImg from "./assets/covers/hat.png";
 (async () => {
   const app = new Application();
   const { loadUI, buildUI, resizeUI, markItemAsFound } = useUI();
+  const { startIdleTimer, unfoundItems, removeItem, itemSprites } =
+    useIdleHint();
 
   await app.init({
     width: window.innerWidth,
@@ -54,6 +57,10 @@ import hatImg from "./assets/covers/hat.png";
   buildUI(app);
 
   const bgSprite = new Sprite(Assets.get(ASSETS_ALIAS.bg));
+  bgSprite.eventMode = "static";
+  bgSprite.on("pointerdown", () => {
+    startIdleTimer();
+  });
   worldContainer.addChild(bgSprite);
 
   const activeItems = [];
@@ -79,20 +86,19 @@ import hatImg from "./assets/covers/hat.png";
     worldContainer.addChild(item);
   }
 
-  let foundItemsCount = 0;
-  const TOTAL_ITEMS = ITEMS_CONFIG.length;
-
   ITEMS_CONFIG.forEach((config) => {
     const item = new Sprite(Assets.get(config.texture));
+    itemSprites[config.id] = item;
 
     item.on("pointerdown", () => {
       playItemAnimation(item);
       markItemAsFound(config.id);
 
-      foundItemsCount++;
+      removeItem(config.id);
+      startIdleTimer();
 
-      if (foundItemsCount === TOTAL_ITEMS) {
-        console.log("ПОБЕДА! Все предметы найдены. Переходим к Этапу 3.");
+      if (unfoundItems.length === 0) {
+        console.log("ПОБЕДА! Конец игры.");
       }
     });
 
@@ -133,5 +139,6 @@ import hatImg from "./assets/covers/hat.png";
   }
 
   resize();
+  startIdleTimer();
   window.addEventListener("resize", resize);
 })();
