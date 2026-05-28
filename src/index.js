@@ -21,7 +21,7 @@ import hatImg from "./assets/covers/hat.png";
 
 (async () => {
   const app = new Application();
-  const { loadUI, buildUI, resizeUI } = useUI();
+  const { loadUI, buildUI, resizeUI, markItemAsFound } = useUI();
 
   await app.init({
     width: window.innerWidth,
@@ -79,11 +79,21 @@ import hatImg from "./assets/covers/hat.png";
     worldContainer.addChild(item);
   }
 
+  let foundItemsCount = 0;
+  const TOTAL_ITEMS = ITEMS_CONFIG.length;
+
   ITEMS_CONFIG.forEach((config) => {
     const item = new Sprite(Assets.get(config.texture));
 
     item.on("pointerdown", () => {
       playItemAnimation(item);
+      markItemAsFound(config.id);
+
+      foundItemsCount++;
+
+      if (foundItemsCount === TOTAL_ITEMS) {
+        console.log("ПОБЕДА! Все предметы найдены. Переходим к Этапу 3.");
+      }
     });
 
     placeSprite(item, config, true);

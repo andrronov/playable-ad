@@ -1,6 +1,10 @@
 import { Assets, Container, Sprite } from "pixi.js";
-import gsap from "gsap";
-import { ASSETS_ALIAS, TEXT_CONFIG } from "./config/index.js";
+import {
+  ASSETS_ALIAS,
+  TEXT_CONFIG,
+  playTitleBannerAnimation,
+  playSelectedItemTextAnimation,
+} from "./config/index.js";
 
 import titleBannerImg from "./assets/ui/title-banner.png";
 import selectBannerImg from "./assets/ui/select-banner.png";
@@ -66,14 +70,7 @@ export function useUI() {
 
     isPortrait = app.screen.height > app.screen.width;
 
-    gsap.to(titleBanner.scale, {
-      x: isPortrait ? titleBanner.scale.x - 0.25 : titleBanner.scale.x * 1.1,
-      y: isPortrait ? titleBanner.scale.y - 0.25 : titleBanner.scale.y * 1.1,
-      duration: 0.8,
-      yoyo: true,
-      repeat: -1,
-      ease: "sine.inOut",
-    });
+    playTitleBannerAnimation(titleBanner, isPortrait);
 
     selectBannerContainer = new Container();
     app.stage.addChild(selectBannerContainer);
@@ -137,9 +134,17 @@ export function useUI() {
     selectBannerContainer.scale.set(uiScale);
   }
 
+  function markItemAsFound(itemId) {
+    const textSprite = uiTexts[itemId];
+    if (!textSprite) return;
+
+    playSelectedItemTextAnimation(textSprite);
+  }
+
   return {
     loadUI,
     buildUI,
     resizeUI,
+    markItemAsFound,
   };
 }

@@ -45,3 +45,53 @@ export function playItemAnimation(item) {
       "<",
     );
 }
+
+export function playTitleBannerAnimation(titleBanner, isPortrait) {
+  gsap.to(titleBanner.scale, {
+    x: isPortrait ? titleBanner.scale.x - 0.25 : titleBanner.scale.x * 1.1,
+    y: isPortrait ? titleBanner.scale.y - 0.25 : titleBanner.scale.y * 1.1,
+    duration: 0.8,
+    yoyo: true,
+    repeat: -1,
+    ease: "sine.inOut",
+  });
+}
+
+export function playSelectedItemTextAnimation(textSprite) {
+  const colorFilter = new ColorMatrixFilter();
+  colorFilter.brightness(2, false);
+  textSprite.filters = [colorFilter];
+
+  const tl = gsap.timeline();
+
+  const currentScaleX = textSprite.scale.x;
+  const currentScaleY = textSprite.scale.y;
+
+  tl.to(textSprite.scale, {
+    x: currentScaleX * 1.3,
+    y: currentScaleY * 1.3,
+    duration: 0.2,
+    ease: "power2.out",
+  })
+    .to(
+      textSprite.scale,
+      {
+        x: currentScaleX,
+        y: currentScaleY,
+        duration: 0.3,
+        ease: "power2.in",
+      },
+      "+=0.1",
+    )
+    .to(
+      textSprite,
+      {
+        alpha: 0.4,
+        duration: 0.3,
+      },
+      "<",
+    )
+    .call(() => {
+      textSprite.filters = null;
+    });
+}
