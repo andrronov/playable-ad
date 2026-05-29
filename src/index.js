@@ -6,6 +6,7 @@ import {
   ITEMS_CONFIG,
   COVERS_CONFIG,
   ASSETS_ALIAS,
+  IS_DEV,
   playItemAnimation,
 } from "./config/index.js";
 
@@ -35,8 +36,9 @@ import hatImg from "./assets/covers/hat.png";
     resizeTo: window,
   });
 
-  // TODO: add wrapper
-  window.__PIXI_APP__ = app;
+  if (IS_DEV) {
+    window.__PIXI_APP__ = app;
+  }
 
   document.body.appendChild(app.canvas);
 
@@ -52,8 +54,8 @@ import hatImg from "./assets/covers/hat.png";
   ]);
   await loadUI();
 
-  const worldContainer = new Container();
-  app.stage.addChild(worldContainer);
+  const appContainer = new Container();
+  app.stage.addChild(appContainer);
   buildUI(app);
 
   const bgSprite = new Sprite(Assets.get(ASSETS_ALIAS.bg));
@@ -61,7 +63,7 @@ import hatImg from "./assets/covers/hat.png";
   bgSprite.on("pointerdown", () => {
     startIdleTimer();
   });
-  worldContainer.addChild(bgSprite);
+  appContainer.addChild(bgSprite);
 
   const activeItems = [];
 
@@ -83,7 +85,7 @@ import hatImg from "./assets/covers/hat.png";
       }
     }
 
-    worldContainer.addChild(item);
+    appContainer.addChild(item);
   }
 
   ITEMS_CONFIG.forEach((config) => {
@@ -109,6 +111,7 @@ import hatImg from "./assets/covers/hat.png";
   });
   COVERS_CONFIG.forEach((config) => {
     const item = new Sprite(Assets.get(config.texture));
+
     placeSprite(item, config, false);
     activeItems.push(item);
   });
@@ -119,16 +122,16 @@ import hatImg from "./assets/covers/hat.png";
     const bgWidth = bgSprite.texture.width;
     const bgHeight = bgSprite.texture.height;
 
-    worldContainer.x = screenWidth / 2;
-    worldContainer.y = screenHeight / 2;
+    appContainer.x = screenWidth / 2;
+    appContainer.y = screenHeight / 2;
 
-    worldContainer.pivot.x = bgWidth / 2;
-    worldContainer.pivot.y = bgHeight / 2;
+    appContainer.pivot.x = bgWidth / 2;
+    appContainer.pivot.y = bgHeight / 2;
 
     const scaleX = screenWidth / bgWidth;
     const scaleY = screenHeight / bgHeight;
     const scale = Math.max(scaleX, scaleY);
-    worldContainer.scale.set(scale);
+    appContainer.scale.set(scale);
 
     const isPortrait = screenHeight > screenWidth;
 

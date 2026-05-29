@@ -77,3 +77,6 @@ export const TEXT_CONFIG = [
   { id: "bird", texture: ASSETS_ALIAS.text.bird, x: 85, y: -50 },
   { id: "shoe", texture: ASSETS_ALIAS.text.shoe, x: 275, y: -50 },
 ];
+
+export const IS_PROD = process.env.NODE_ENV === "production";
+export const IS_DEV = process.env.NODE_ENV === "development";

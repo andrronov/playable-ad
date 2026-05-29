@@ -33,6 +33,23 @@ export function useUI() {
   let logoWrapper, logoSprite;
   let btnWrapper, btnSprite;
 
+  function initSprite(alias, container = undefined, anchor = [0.5]) {
+    const sprite = new Sprite(Assets.get(alias));
+    sprite.anchor.set(...anchor);
+
+    if (container) {
+      container.addChild(sprite);
+    }
+
+    return sprite;
+  }
+  function initContainer(parent) {
+    const container = new Container();
+    parent.addChild(container);
+
+    return container;
+  }
+
   async function loadUI() {
     await Assets.load([
       {
@@ -83,33 +100,26 @@ export function useUI() {
   }
 
   function buildUI(app) {
-    const uiContainer = new Container();
-    app.stage.addChild(uiContainer);
+    const uiContainer = initContainer(app.stage);
+    isPortrait = app.screen.height > app.screen.width;
 
-    titleBanner = new Sprite(Assets.get(ASSETS_ALIAS.titleBanner));
-    titleBanner.anchor.set(0.5, 0);
-    uiContainer.addChild(titleBanner);
+    titleBanner = initSprite(ASSETS_ALIAS.titleBanner, uiContainer, [0.5, 0]);
 
-    const titleText = new Sprite(Assets.get(ASSETS_ALIAS.text.title));
-    titleBanner.addChild(titleText);
-    titleText.anchor.set(0.5);
+    const titleText = initSprite(ASSETS_ALIAS.text.title, titleBanner);
     titleText.x = 0;
     titleText.y = titleBanner.height / 1.75;
 
-    isPortrait = app.screen.height > app.screen.width;
-
     playTitleBannerAnimation(titleBanner, isPortrait);
 
-    selectBannerContainer = new Container();
-    app.stage.addChild(selectBannerContainer);
-    selectBanner = new Sprite(Assets.get(ASSETS_ALIAS.selectBanner));
-    selectBanner.anchor.set(0.5, 1);
-    selectBannerContainer.addChild(selectBanner);
+    selectBannerContainer = initContainer(app.stage);
+    selectBanner = initSprite(
+      ASSETS_ALIAS.selectBanner,
+      selectBannerContainer,
+      [0.5, 1],
+    );
 
     TEXT_CONFIG.forEach((config) => {
-      const textSprite = new Sprite(Assets.get(config.texture));
-      selectBannerContainer.addChild(textSprite);
-      textSprite.anchor.set(0.5);
+      const textSprite = initSprite(config.texture, selectBannerContainer);
       textSprite.x = config.x;
       textSprite.y = config.y;
 
@@ -120,38 +130,22 @@ export function useUI() {
   }
 
   function buildCtaScreen(app) {
-    ctaContainer = new Container();
+    ctaContainer = initContainer(app.stage);
     ctaContainer.visible = false;
     ctaContainer.alpha = 0;
-    app.stage.addChild(ctaContainer);
 
-    overlaySprite = new Sprite(Assets.get(ASSETS_ALIAS.bgBlur));
-    overlaySprite.anchor.set(0.5);
-    ctaContainer.addChild(overlaySprite);
-
-    logoWrapper = new Container();
-    ctaContainer.addChild(logoWrapper);
-
-    logoSprite = new Sprite(Assets.get(ASSETS_ALIAS.logo));
-    logoSprite.anchor.set(0.5);
-    logoWrapper.addChild(logoSprite);
-
-    btnWrapper = new Container();
-    ctaContainer.addChild(btnWrapper);
-
-    btnSprite = new Sprite(Assets.get(ASSETS_ALIAS.ctaButton));
-    btnSprite.anchor.set(0.5);
-
-    const btnTextSprite = new Sprite(Assets.get(ASSETS_ALIAS.text.playFree));
-    btnTextSprite.anchor.set(0.5);
-    btnSprite.addChild(btnTextSprite);
+    overlaySprite = initSprite(ASSETS_ALIAS.bgBlur, ctaContainer);
+    logoWrapper = initContainer(ctaContainer);
+    logoSprite = initSprite(ASSETS_ALIAS.logo, logoWrapper);
+    btnWrapper = initContainer(ctaContainer);
+    btnSprite = initSprite(ASSETS_ALIAS.ctaButton, btnWrapper);
+    initSprite(ASSETS_ALIAS.text.playFree, btnSprite);
 
     btnSprite.eventMode = "static";
     btnSprite.cursor = "pointer";
     btnSprite.on("pointerdown", () => {
       console.log("clicked");
     });
-    btnWrapper.addChild(btnSprite);
   }
 
   function resizeUI(screenWidth, screenHeight) {

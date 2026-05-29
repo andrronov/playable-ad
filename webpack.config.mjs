@@ -45,6 +45,6 @@ export default {
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
-    // new HtmlInlineScriptPlugin(),
+    new HtmlInlineScriptPlugin(),
   ],
 };
