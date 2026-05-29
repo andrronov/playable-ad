@@ -4,6 +4,8 @@ import {
   TEXT_CONFIG,
   playTitleBannerAnimation,
   playSelectedItemTextAnimation,
+  toBlurTransition,
+  ctaAnimation,
 } from "./config/index.js";
 
 import titleBannerImg from "./assets/ui/title-banner.png";
@@ -13,6 +15,11 @@ import birdTextImg from "./assets/ui/text/bird.png";
 import bookTextImg from "./assets/ui/text/book.png";
 import shoeTextImg from "./assets/ui/text/shoe.png";
 import titleTextImg from "./assets/ui/text/title.png";
+import playFreeTextImg from "./assets/ui/text/play-free.png";
+
+import ctaButtonImg from "./assets/cta-button.png";
+import logoImg from "./assets/logo.png";
+import bgBlurImg from "./assets/bg-blur.jpg";
 
 export function useUI() {
   let titleBanner;
@@ -20,6 +27,11 @@ export function useUI() {
   let selectBanner;
   let isPortrait;
   const uiTexts = {};
+
+  let ctaContainer;
+  let overlaySprite;
+  let logoWrapper, logoSprite;
+  let btnWrapper, btnSprite;
 
   async function loadUI() {
     await Assets.load([
@@ -48,8 +60,24 @@ export function useUI() {
         src: titleTextImg,
       },
       {
+        alias: ASSETS_ALIAS.text.playFree,
+        src: playFreeTextImg,
+      },
+      {
         alias: ASSETS_ALIAS.selectBanner,
         src: selectBannerImg,
+      },
+      {
+        alias: ASSETS_ALIAS.ctaButton,
+        src: ctaButtonImg,
+      },
+      {
+        alias: ASSETS_ALIAS.logo,
+        src: logoImg,
+      },
+      {
+        alias: ASSETS_ALIAS.bgBlur,
+        src: bgBlurImg,
       },
     ]);
   }
@@ -87,6 +115,43 @@ export function useUI() {
 
       uiTexts[config.id] = textSprite;
     });
+
+    buildCtaScreen(app);
+  }
+
+  function buildCtaScreen(app) {
+    ctaContainer = new Container();
+    ctaContainer.visible = false;
+    ctaContainer.alpha = 0;
+    app.stage.addChild(ctaContainer);
+
+    overlaySprite = new Sprite(Assets.get(ASSETS_ALIAS.bgBlur));
+    overlaySprite.anchor.set(0.5);
+    ctaContainer.addChild(overlaySprite);
+
+    logoWrapper = new Container();
+    ctaContainer.addChild(logoWrapper);
+
+    logoSprite = new Sprite(Assets.get(ASSETS_ALIAS.logo));
+    logoSprite.anchor.set(0.5);
+    logoWrapper.addChild(logoSprite);
+
+    btnWrapper = new Container();
+    ctaContainer.addChild(btnWrapper);
+
+    btnSprite = new Sprite(Assets.get(ASSETS_ALIAS.ctaButton));
+    btnSprite.anchor.set(0.5);
+
+    const btnTextSprite = new Sprite(Assets.get(ASSETS_ALIAS.text.playFree));
+    btnTextSprite.anchor.set(0.5);
+    btnSprite.addChild(btnTextSprite);
+
+    btnSprite.eventMode = "static";
+    btnSprite.cursor = "pointer";
+    btnSprite.on("pointerdown", () => {
+      console.log("clicked");
+    });
+    btnWrapper.addChild(btnSprite);
   }
 
   function resizeUI(screenWidth, screenHeight) {
@@ -130,6 +195,29 @@ export function useUI() {
       });
     }
 
+    if (ctaContainer) {
+      ctaContainer.x = screenWidth / 2;
+      ctaContainer.y = screenHeight / 2;
+
+      if (overlaySprite) {
+        const bgWidth = overlaySprite.texture.width;
+        const bgHeight = overlaySprite.texture.height;
+        const scaleX = screenWidth / bgWidth;
+        const scaleY = screenHeight / bgHeight;
+        overlaySprite.scale.set(Math.max(scaleX, scaleY));
+      }
+
+      const baseCtaWidth = 600;
+      const ctaScale =
+        screenWidth < baseCtaWidth ? screenWidth / baseCtaWidth : 1;
+
+      logoWrapper.scale.set(isPortrait ? ctaScale - 0.275 : ctaScale);
+      btnWrapper.scale.set(ctaScale);
+
+      logoWrapper.y = isPortrait ? -150 : -205;
+      btnWrapper.y = isPortrait ? 150 : 130;
+    }
+
     titleBanner.scale.set(uiScale);
     selectBannerContainer.scale.set(uiScale);
   }
@@ -141,10 +229,17 @@ export function useUI() {
     playSelectedItemTextAnimation(textSprite);
   }
 
+  function showCTA() {
+    ctaContainer.visible = true;
+    toBlurTransition(titleBanner, selectBannerContainer);
+    ctaAnimation(ctaContainer, logoSprite, btnSprite);
+  }
+
   return {
     loadUI,
     buildUI,
     resizeUI,
     markItemAsFound,
+    showCTA,
   };
 }

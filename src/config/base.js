@@ -2,6 +2,9 @@ import { Circle, Polygon } from "pixi.js";
 
 export const ASSETS_ALIAS = {
   bg: "bg",
+  bgBlur: "bg-blur",
+  logo: "logo",
+  ctaButton: "cta-button",
   apple: "apple",
   book: "book",
   bird: "bird",
@@ -17,6 +20,7 @@ export const ASSETS_ALIAS = {
     bird: "bird-text",
     shoe: "shoe-text",
     title: "title-text",
+    playFree: "play-free-text",
   },
 };
 

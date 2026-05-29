@@ -32,7 +32,6 @@ export function useIdleHint() {
   function startIdleTimer() {
     resetHintState();
     if (idleTimer) idleTimer.kill();
-
     if (unfoundItems.length === 0) return;
 
     idleTimer = gsap.delayedCall(5, () => {

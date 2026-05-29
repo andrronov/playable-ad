@@ -22,7 +22,7 @@ import hatImg from "./assets/covers/hat.png";
 
 (async () => {
   const app = new Application();
-  const { loadUI, buildUI, resizeUI, markItemAsFound } = useUI();
+  const { loadUI, buildUI, resizeUI, markItemAsFound, showCTA } = useUI();
   const { startIdleTimer, unfoundItems, removeItem, itemSprites } =
     useIdleHint();
 
@@ -98,7 +98,9 @@ import hatImg from "./assets/covers/hat.png";
       startIdleTimer();
 
       if (unfoundItems.length === 0) {
-        console.log("ПОБЕДА! Конец игры.");
+        setTimeout(() => {
+          showCTA();
+        }, 750);
       }
     });
 
