@@ -3,6 +3,7 @@ import webpack from "webpack";
 import { fileURLToPath } from "url";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import HtmlInlineScriptPlugin from "html-inline-script-webpack-plugin";
+import { IS_PROD } from "./src/config/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -45,6 +46,6 @@ export default {
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
-    new HtmlInlineScriptPlugin(),
+    IS_PROD ? new HtmlInlineScriptPlugin() : null,
   ],
 };
