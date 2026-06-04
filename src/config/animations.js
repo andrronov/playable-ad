@@ -50,8 +50,8 @@ export function playTitleBannerAnimation(titleBanner) {
   titleBanner.scale.set(1);
 
   gsap.to(titleBanner.scale, {
-    x: 1.05,
-    y: 1.05,
+    x: 1.075,
+    y: 1.075,
     duration: 0.8,
     yoyo: true,
     repeat: -1,

@@ -193,7 +193,6 @@ export function useUI() {
       const scaleBottomX = maxBottomWidth / bgWidth;
       const scaleBottomY = maxBottomHeight / bgHeight;
 
-      console.log(scaleBottomX, scaleBottomY);
       const finalBottomScale = Math.min(scaleBottomX, scaleBottomY - 0.1, 1);
       selectBannerContainer.scale.set(finalBottomScale);
 
@@ -220,15 +219,26 @@ export function useUI() {
         overlaySprite.scale.set(Math.max(scaleX, scaleY));
       }
 
-      const baseCtaWidth = 600;
-      const ctaScale =
-        screenWidth < baseCtaWidth ? screenWidth / baseCtaWidth : 1;
+      const maxLogoWidth = screenWidth * 0.95;
+      const maxLogoHeight = screenHeight * (isPortrait ? 0.4 : 0.5);
 
-      logoWrapper.scale.set(isPortrait ? ctaScale - 0.15 : ctaScale);
-      btnWrapper.scale.set(ctaScale);
+      const logoScaleX = maxLogoWidth / logoSprite.texture.width;
+      const logoScaleY = maxLogoHeight / logoSprite.texture.height;
 
-      logoWrapper.y = isPortrait ? -150 : -205;
-      btnWrapper.y = isPortrait ? 150 : 130;
+      const finalLogoScale = Math.min(logoScaleX, logoScaleY, 1.25);
+      logoWrapper.scale.set(finalLogoScale);
+
+      const maxBtnWidth = screenWidth * (isPortrait ? 0.55 : 0.75);
+      const maxBtnHeight = screenHeight * 0.15;
+
+      const btnScaleX = maxBtnWidth / btnSprite.texture.width;
+      const btnScaleY = maxBtnHeight / btnSprite.texture.height;
+
+      const finalBtnScale = Math.min(btnScaleX, btnScaleY, 1);
+      btnWrapper.scale.set(finalBtnScale);
+
+      logoWrapper.y = -(screenHeight * 0.2);
+      btnWrapper.y = screenHeight * 0.2;
     }
   }
 
