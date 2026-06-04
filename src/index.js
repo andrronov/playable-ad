@@ -145,6 +145,14 @@ import hatImg from "./assets/covers/hat.png";
 
   resize();
   startIdleTimer();
-  window.addEventListener("resize", resize);
-  // window.addEventListener("orientationchange", resize);
+
+  let resizeTimer;
+  function handleResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      app.resize();
+      resize();
+    }, 150);
+  }
+  window.addEventListener("resize", handleResize);
 })();

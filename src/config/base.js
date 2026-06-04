@@ -59,7 +59,7 @@ export const ITEMS_CONFIG = [
     hitArea: new Polygon([
       -65, -20, -40, -45, 20, -20, 65, -20, 60, 25, -10, 45,
     ]),
-    lx: 760,
+    lx: 770,
     ly: 744,
   },
 ];

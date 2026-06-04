@@ -175,14 +175,29 @@ export function useUI() {
     selectBannerContainer.y = screenHeight;
 
     if (isPortrait) {
-      const maxBottomWidth = screenWidth * 0.95;
-      const bottomScale =
-        maxBottomWidth < bgWidth ? maxBottomWidth / bgWidth : 1;
-      selectBannerContainer.scale.set(bottomScale);
+      selectBanner.scale.y = 2.5;
+      const actualBgHeight = bgHeight * 1.6;
 
-      TEXT_CONFIG.forEach((config) => {
+      const maxBottomWidth = screenWidth * 0.95;
+      const maxBottomHeight = screenHeight * 0.22;
+
+      const scaleBottomX = maxBottomWidth / bgWidth;
+      const scaleBottomY = maxBottomHeight / actualBgHeight;
+
+      const finalBottomScale = Math.min(scaleBottomX, scaleBottomY, 0.95);
+      selectBannerContainer.scale.set(finalBottomScale);
+
+      TEXT_CONFIG.forEach((config, index) => {
         const textSprite = uiTexts[config.id];
-        textSprite.scale.set(1.5);
+
+        textSprite.scale.set(2);
+
+        const col = index % 2;
+        const row = Math.floor(index / 2);
+
+        textSprite.x = col === 0 ? -(bgWidth * 0.25) : bgWidth * 0.25;
+        textSprite.y =
+          row === 0 ? -(actualBgHeight * 0.825) : -(actualBgHeight * 0.3);
       });
     } else {
       selectBanner.scale.y = 1;
@@ -228,7 +243,7 @@ export function useUI() {
       const finalLogoScale = Math.min(logoScaleX, logoScaleY, 1.25);
       logoWrapper.scale.set(finalLogoScale);
 
-      const maxBtnWidth = screenWidth * (isPortrait ? 0.55 : 0.75);
+      const maxBtnWidth = screenWidth * (isPortrait ? 0.65 : 0.75);
       const maxBtnHeight = screenHeight * 0.15;
 
       const btnScaleX = maxBtnWidth / btnSprite.texture.width;
