@@ -31,28 +31,27 @@ export const ITEMS_CONFIG = [
     hitArea: new Circle(0, 0, 30),
     lx: 823,
     ly: 481,
-    px: 866,
-    py: 302,
+    // px: 866,
+    // py: 302,
   },
   {
     id: "book",
     texture: ASSETS_ALIAS.book,
-    hitArea: new Polygon([-66, 1, -76, -94, -6, -44, 84, 31, 79, 56]),
-    lx: 582,
-    ly: 931,
-    px: 988,
-    py: 757,
-    alpha: 0.8,
+    hitArea: new Polygon([-56, 0, -56, -74, -1, -34, 54, 31, 69, 46]),
+    lx: 559,
+    ly: 717,
+    px: 968,
+    py: 762,
   },
   {
     id: "bird",
     texture: ASSETS_ALIAS.bird,
     hitArea: new Circle(0, 0, 40),
-    lx: 1495,
-    ly: 185,
-    px: 768,
-    py: 39.5,
-    alpha: 0.65,
+    lx: 1335,
+    ly: 423,
+    px: 973,
+    py: 302,
+    alpha: 0.8,
   },
   {
     id: "shoe",
@@ -60,8 +59,8 @@ export const ITEMS_CONFIG = [
     hitArea: new Polygon([
       -65, -20, -40, -45, 20, -20, 65, -20, 60, 25, -10, 45,
     ]),
-    lx: 758,
-    ly: 734,
+    lx: 760,
+    ly: 744,
   },
 ];
 
@@ -72,10 +71,10 @@ export const COVERS_CONFIG = [
 ];
 
 export const TEXT_CONFIG = [
-  { id: "apple", texture: ASSETS_ALIAS.text.apple, x: -275, y: -50 },
-  { id: "book", texture: ASSETS_ALIAS.text.book, x: -85, y: -50 },
-  { id: "bird", texture: ASSETS_ALIAS.text.bird, x: 85, y: -50 },
-  { id: "shoe", texture: ASSETS_ALIAS.text.shoe, x: 275, y: -50 },
+  { id: "apple", texture: ASSETS_ALIAS.text.apple, x: -400, y: -50 },
+  { id: "book", texture: ASSETS_ALIAS.text.book, x: -125, y: -50 },
+  { id: "bird", texture: ASSETS_ALIAS.text.bird, x: 125, y: -50 },
+  { id: "shoe", texture: ASSETS_ALIAS.text.shoe, x: 400, y: -50 },
 ];
 
 export const IS_PROD = process.env.NODE_ENV === "production";

@@ -72,7 +72,7 @@ import hatImg from "./assets/covers/hat.png";
     item.ly = config.ly;
     item.px = config.px ?? config.lx;
     item.py = config.py ?? config.ly;
-    item.alpha = config.alpha ?? 0.9;
+    item.alpha = config.alpha ?? 1;
 
     item.anchor.set(0.5);
 
@@ -146,4 +146,5 @@ import hatImg from "./assets/covers/hat.png";
   resize();
   startIdleTimer();
   window.addEventListener("resize", resize);
+  // window.addEventListener("orientationchange", resize);
 })();

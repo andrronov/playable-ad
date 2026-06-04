@@ -47,14 +47,14 @@ export function playItemAnimation(item) {
 }
 
 export function playTitleBannerAnimation(titleBanner, isPortrait) {
-  gsap.to(titleBanner.scale, {
-    x: isPortrait ? titleBanner.scale.x - 0.25 : titleBanner.scale.x * 1.1,
-    y: isPortrait ? titleBanner.scale.y - 0.25 : titleBanner.scale.y * 1.1,
-    duration: 0.8,
-    yoyo: true,
-    repeat: -1,
-    ease: "sine.inOut",
-  });
+  // gsap.to(titleBanner.scale, {
+  //   x: isPortrait ? titleBanner.scale.x - 0.25 : titleBanner.scale.x * 1.1,
+  //   y: isPortrait ? titleBanner.scale.y - 0.25 : titleBanner.scale.y * 1.1,
+  //   duration: 0.8,
+  //   yoyo: true,
+  //   repeat: -1,
+  //   ease: "sine.inOut",
+  // });
 }
 
 export function playSelectedItemTextAnimation(textSprite) {

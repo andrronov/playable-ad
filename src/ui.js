@@ -149,43 +149,60 @@ export function useUI() {
   }
 
   function resizeUI(screenWidth, screenHeight) {
-    titleBanner.x = screenWidth / 2;
-    titleBanner.y = 20;
-
-    const baseUiWidth = 500;
-    const uiScale = screenWidth < baseUiWidth ? screenWidth / baseUiWidth : 1;
-
     isPortrait = screenHeight > screenWidth;
 
+    titleBanner.x = screenWidth / 2;
+    titleBanner.y = Math.max(15, screenHeight * 0.02);
+
+    const titleWidth = titleBanner.texture.width;
+    const titleHeight = titleBanner.texture.height;
+
+    const maxTitleWidth = screenWidth * 0.9;
+    const maxTitleHeight = screenHeight * 0.18;
+
+    const scaleTitleX = maxTitleWidth / titleWidth;
+    const scaleTitleY = maxTitleHeight / titleHeight;
+
+    const finalTitleScale = Math.min(scaleTitleX, scaleTitleY, 1.2);
+    titleBanner.scale.set(finalTitleScale);
+
     const bgWidth = selectBanner.texture.width;
+    const bgHeight = selectBanner.texture.height;
 
-    const maxBottomWidth = screenWidth * 0.95;
-    const bottomScale = maxBottomWidth < bgWidth ? maxBottomWidth / bgWidth : 1;
-
-    selectBannerContainer.scale.set(bottomScale);
     selectBannerContainer.x = screenWidth / 2;
     selectBannerContainer.y = screenHeight;
 
     if (isPortrait) {
-      selectBanner.scale.y = 1.45;
+      const maxBottomWidth = screenWidth * 0.95;
+      const bottomScale =
+        maxBottomWidth < bgWidth ? maxBottomWidth / bgWidth : 1;
+      selectBannerContainer.scale.set(bottomScale);
 
-      TEXT_CONFIG.forEach((config, index) => {
+      TEXT_CONFIG.forEach((config) => {
         const textSprite = uiTexts[config.id];
-
-        const col = index % 2;
-        const row = Math.floor(index / 2);
-
-        textSprite.x = col === 0 ? -120 : 120;
-        textSprite.y = row === 0 ? -110 : -40;
+        textSprite.scale.set(1.5);
       });
     } else {
       selectBanner.scale.y = 1;
 
-      TEXT_CONFIG.forEach((config) => {
+      const maxBottomWidth = screenWidth * 0.95;
+      const maxBottomHeight = screenHeight * 0.18;
+
+      const scaleBottomX = maxBottomWidth / bgWidth;
+      const scaleBottomY = maxBottomHeight / bgHeight;
+
+      console.log(scaleBottomX, scaleBottomY);
+      const finalBottomScale = Math.min(scaleBottomX, scaleBottomY - 0.1, 1);
+      selectBannerContainer.scale.set(finalBottomScale);
+
+      const widthOffsets = [-0.3, -0.1, 0.1, 0.3];
+
+      TEXT_CONFIG.forEach((config, index) => {
         const textSprite = uiTexts[config.id];
         textSprite.scale.set(1);
-        textSprite.x = config.x;
-        textSprite.y = config.y;
+
+        textSprite.x = bgWidth * widthOffsets[index];
+        textSprite.y = -(bgHeight * 0.375);
       });
     }
 
@@ -194,10 +211,10 @@ export function useUI() {
       ctaContainer.y = screenHeight / 2;
 
       if (overlaySprite) {
-        const bgWidth = overlaySprite.texture.width;
-        const bgHeight = overlaySprite.texture.height;
-        const scaleX = screenWidth / bgWidth;
-        const scaleY = screenHeight / bgHeight;
+        const bgWidthCTA = overlaySprite.texture.width;
+        const bgHeightCTA = overlaySprite.texture.height;
+        const scaleX = screenWidth / bgWidthCTA;
+        const scaleY = screenHeight / bgHeightCTA;
         overlaySprite.scale.set(Math.max(scaleX, scaleY));
       }
 
@@ -205,15 +222,12 @@ export function useUI() {
       const ctaScale =
         screenWidth < baseCtaWidth ? screenWidth / baseCtaWidth : 1;
 
-      logoWrapper.scale.set(isPortrait ? ctaScale - 0.275 : ctaScale);
+      logoWrapper.scale.set(isPortrait ? ctaScale - 0.15 : ctaScale);
       btnWrapper.scale.set(ctaScale);
 
       logoWrapper.y = isPortrait ? -150 : -205;
       btnWrapper.y = isPortrait ? 150 : 130;
     }
-
-    titleBanner.scale.set(uiScale);
-    selectBannerContainer.scale.set(uiScale);
   }
 
   function markItemAsFound(itemId) {
