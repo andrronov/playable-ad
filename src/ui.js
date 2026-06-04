@@ -270,11 +270,14 @@ export function useUI() {
     ctaAnimation(ctaContainer, logoSprite, btnSprite);
   }
 
+  const getSelectBannerContainer = () => selectBannerContainer;
+
   return {
     loadUI,
     buildUI,
     resizeUI,
     markItemAsFound,
     showCTA,
+    getSelectBannerContainer,
   };
 }

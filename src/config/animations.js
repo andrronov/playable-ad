@@ -169,3 +169,12 @@ export function ctaAnimation(ctaContainer, logoSprite, btnSprite) {
     },
   });
 }
+
+export function playIntroAnimation(selectBannerContainer) {
+  gsap.from(selectBannerContainer, {
+    y: "+=250",
+    alpha: 0,
+    duration: 0.8,
+    ease: "power2.out",
+  });
+}

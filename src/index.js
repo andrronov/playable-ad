@@ -8,6 +8,7 @@ import {
   ASSETS_ALIAS,
   IS_DEV,
   playItemAnimation,
+  playIntroAnimation,
 } from "./config/index.js";
 
 import bgImg from "./assets/bg.jpg";
@@ -23,7 +24,14 @@ import hatImg from "./assets/covers/hat.png";
 
 (async () => {
   const app = new Application();
-  const { loadUI, buildUI, resizeUI, markItemAsFound, showCTA } = useUI();
+  const {
+    loadUI,
+    buildUI,
+    resizeUI,
+    markItemAsFound,
+    showCTA,
+    getSelectBannerContainer,
+  } = useUI();
   const { startIdleTimer, unfoundItems, removeItem, itemSprites } =
     useIdleHint();
 
@@ -144,6 +152,7 @@ import hatImg from "./assets/covers/hat.png";
   }
 
   resize();
+  playIntroAnimation(getSelectBannerContainer(), app.screen.height);
   startIdleTimer();
 
   let resizeTimer;
