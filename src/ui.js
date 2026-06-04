@@ -22,7 +22,7 @@ import logoImg from "./assets/logo.png";
 import bgBlurImg from "./assets/bg-blur.jpg";
 
 export function useUI() {
-  let titleBanner;
+  let titleWrapper, titleBanner;
   let selectBannerContainer;
   let selectBanner;
   let isPortrait;
@@ -103,13 +103,15 @@ export function useUI() {
     const uiContainer = initContainer(app.stage);
     isPortrait = app.screen.height > app.screen.width;
 
-    titleBanner = initSprite(ASSETS_ALIAS.titleBanner, uiContainer, [0.5, 0]);
+    titleWrapper = initContainer(uiContainer);
+
+    titleBanner = initSprite(ASSETS_ALIAS.titleBanner, titleWrapper, [0.5, 0]);
 
     const titleText = initSprite(ASSETS_ALIAS.text.title, titleBanner);
     titleText.x = 0;
     titleText.y = titleBanner.height / 1.75;
 
-    playTitleBannerAnimation(titleBanner, isPortrait);
+    playTitleBannerAnimation(titleBanner);
 
     selectBannerContainer = initContainer(app.stage);
     selectBanner = initSprite(
@@ -151,8 +153,8 @@ export function useUI() {
   function resizeUI(screenWidth, screenHeight) {
     isPortrait = screenHeight > screenWidth;
 
-    titleBanner.x = screenWidth / 2;
-    titleBanner.y = Math.max(15, screenHeight * 0.02);
+    titleWrapper.x = screenWidth / 2;
+    titleWrapper.y = Math.max(15, screenHeight * 0.02);
 
     const titleWidth = titleBanner.texture.width;
     const titleHeight = titleBanner.texture.height;
@@ -164,7 +166,7 @@ export function useUI() {
     const scaleTitleY = maxTitleHeight / titleHeight;
 
     const finalTitleScale = Math.min(scaleTitleX, scaleTitleY, 1.2);
-    titleBanner.scale.set(finalTitleScale);
+    titleWrapper.scale.set(finalTitleScale);
 
     const bgWidth = selectBanner.texture.width;
     const bgHeight = selectBanner.texture.height;
@@ -239,7 +241,7 @@ export function useUI() {
 
   function showCTA() {
     ctaContainer.visible = true;
-    toBlurTransition(titleBanner, selectBannerContainer);
+    toBlurTransition(titleWrapper, selectBannerContainer);
     ctaAnimation(ctaContainer, logoSprite, btnSprite);
   }
 
