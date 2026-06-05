@@ -5,8 +5,6 @@ export function playItemAnimation(item) {
   item.eventMode = "none";
   item.zIndex = 1000;
 
-  createParticles(item);
-
   const colorFilter = new ColorMatrixFilter();
   colorFilter.brightness(1.5, false);
   item.filters = [colorFilter];
@@ -46,39 +44,6 @@ export function playItemAnimation(item) {
       },
       "<",
     );
-}
-
-function createParticles(item) {
-  const parent = item.parent;
-  if (!parent) return;
-
-  const particleCount = 20;
-
-  for (let i = 0; i < particleCount; i++) {
-    const p = new Graphics();
-
-    p.circle(0, 0, 6).fill(0xffcc00);
-
-    p.x = item.x;
-    p.y = item.y;
-    parent.addChild(p);
-
-    const angle = (Math.PI * 2 * i) / particleCount + Math.random() * 0.5;
-    const distance = 80 + Math.random() * 50;
-
-    gsap.to(p, {
-      x: item.x + Math.cos(angle) * distance,
-      y: item.y + Math.sin(angle) * distance,
-      alpha: 0,
-      scaleX: 0.1,
-      scaleY: 0.1,
-      duration: 0.65 + Math.random() * 0.3,
-      ease: "power2.out",
-      onComplete: () => {
-        p.destroy();
-      },
-    });
-  }
 }
 
 export function playTitleBannerAnimation(titleBanner) {
