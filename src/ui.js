@@ -1,4 +1,4 @@
-import { Assets, Container, Sprite } from "pixi.js";
+import { Assets, Container, Sprite, Spritesheet } from "pixi.js";
 import {
   ASSETS_ALIAS,
   TEXT_CONFIG,
@@ -8,20 +8,13 @@ import {
   ctaAnimation,
 } from "./config/index.js";
 
-import titleBannerImg from "./assets/ui/title-banner.png";
-import selectBannerImg from "./assets/ui/select-banner.png";
-import appleTextImg from "./assets/ui/text/apple.png";
-import birdTextImg from "./assets/ui/text/bird.png";
-import bookTextImg from "./assets/ui/text/book.png";
-import shoeTextImg from "./assets/ui/text/shoe.png";
-import titleTextImg from "./assets/ui/text/title.png";
-import playFreeTextImg from "./assets/ui/text/play-free.png";
-
-import ctaButtonImg from "./assets/cta-button.png";
+import uiAtlasData from "./assets/atlases/ui/spritesheet.json";
+import uiAtlasPng from "./assets/atlases/ui/spritesheet.png";
 import logoImg from "./assets/logo.png";
 import bgBlurImg from "./assets/bg-blur.jpg";
 
 export function useUI() {
+  let uiSheet;
   let titleWrapper, titleBanner;
   let selectBannerContainer;
   let selectBanner;
@@ -34,7 +27,9 @@ export function useUI() {
   let btnWrapper, btnSprite;
 
   function initSprite(alias, container = undefined, anchor = [0.5]) {
-    const sprite = new Sprite(Assets.get(alias));
+    const textureFromAtlas = uiSheet.textures[alias];
+    const sprite = new Sprite(textureFromAtlas ?? Assets.get(alias));
+
     sprite.anchor.set(...anchor);
 
     if (container) {
@@ -53,42 +48,6 @@ export function useUI() {
   async function loadUI() {
     await Assets.load([
       {
-        alias: ASSETS_ALIAS.titleBanner,
-        src: titleBannerImg,
-      },
-      {
-        alias: ASSETS_ALIAS.text.apple,
-        src: appleTextImg,
-      },
-      {
-        alias: ASSETS_ALIAS.text.bird,
-        src: birdTextImg,
-      },
-      {
-        alias: ASSETS_ALIAS.text.book,
-        src: bookTextImg,
-      },
-      {
-        alias: ASSETS_ALIAS.text.shoe,
-        src: shoeTextImg,
-      },
-      {
-        alias: ASSETS_ALIAS.text.title,
-        src: titleTextImg,
-      },
-      {
-        alias: ASSETS_ALIAS.text.playFree,
-        src: playFreeTextImg,
-      },
-      {
-        alias: ASSETS_ALIAS.selectBanner,
-        src: selectBannerImg,
-      },
-      {
-        alias: ASSETS_ALIAS.ctaButton,
-        src: ctaButtonImg,
-      },
-      {
         alias: ASSETS_ALIAS.logo,
         src: logoImg,
       },
@@ -97,6 +56,10 @@ export function useUI() {
         src: bgBlurImg,
       },
     ]);
+
+    const atlasTexture = await Assets.load(uiAtlasPng);
+    uiSheet = new Spritesheet(atlasTexture, uiAtlasData);
+    await uiSheet.parse();
   }
 
   function buildUI(app) {

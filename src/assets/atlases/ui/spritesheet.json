@@ -1,0 +1,196 @@
+{
+    "frames": {
+        "apple-text.png": {
+            "frame": {
+                "x": 1,
+                "y": 1,
+                "w": 128,
+                "h": 47
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 128,
+                "h": 47
+            },
+            "sourceSize": {
+                "w": 128,
+                "h": 47
+            }
+        },
+        "bird-text.png": {
+            "frame": {
+                "x": 131,
+                "y": 1,
+                "w": 80,
+                "h": 38
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 80,
+                "h": 38
+            },
+            "sourceSize": {
+                "w": 80,
+                "h": 38
+            }
+        },
+        "book-text.png": {
+            "frame": {
+                "x": 213,
+                "y": 1,
+                "w": 104,
+                "h": 38
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 38
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 38
+            }
+        },
+        "cta-button.png": {
+            "frame": {
+                "x": 319,
+                "y": 1,
+                "w": 414,
+                "h": 105
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 414,
+                "h": 105
+            },
+            "sourceSize": {
+                "w": 414,
+                "h": 105
+            }
+        },
+        "play-free-text.png": {
+            "frame": {
+                "x": 735,
+                "y": 1,
+                "w": 153,
+                "h": 23
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 153,
+                "h": 23
+            },
+            "sourceSize": {
+                "w": 153,
+                "h": 23
+            }
+        },
+        "select-banner.png": {
+            "frame": {
+                "x": 1,
+                "y": 108,
+                "w": 1358,
+                "h": 136
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 1358,
+                "h": 136
+            },
+            "sourceSize": {
+                "w": 1358,
+                "h": 136
+            }
+        },
+        "shoe-text.png": {
+            "frame": {
+                "x": 890,
+                "y": 1,
+                "w": 100,
+                "h": 38
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 38
+            },
+            "sourceSize": {
+                "w": 100,
+                "h": 38
+            }
+        },
+        "title-banner.png": {
+            "frame": {
+                "x": 1,
+                "y": 246,
+                "w": 516,
+                "h": 217
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 516,
+                "h": 217
+            },
+            "sourceSize": {
+                "w": 516,
+                "h": 217
+            }
+        },
+        "title-text.png": {
+            "frame": {
+                "x": 519,
+                "y": 246,
+                "w": 393,
+                "h": 91
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 393,
+                "h": 91
+            },
+            "sourceSize": {
+                "w": 393,
+                "h": 91
+            }
+        }
+    },
+    "meta": {
+        "app": "https://www.codeandweb.com/texturepacker",
+        "version": "1.0",
+        "image": "spritesheet.png",
+        "format": "RGBA8888",
+        "size": {
+            "w": 1360,
+            "h": 464
+        },
+        "scale": "1",
+        "comment": "Created with TexturePacker Online (free version)\nhttps://www.codeandweb.com/texturepacker-online\n\nTexturePacker desktop offers better support for Pixi and Phaser with sprite trimming, better packing algorithms, hardware texture compression, and PNG optimization.\nTry TexturePacker desktop: https://www.codeandweb.com/texturepacker"
+    }
+}

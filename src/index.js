@@ -1,5 +1,5 @@
 import "./style.css";
-import { Application, Container, Sprite, Assets } from "pixi.js";
+import { Application, Container, Sprite, Assets, Spritesheet } from "pixi.js";
 import { useUI } from "./ui.js";
 import { useIdleHint } from "./idle-hint.js";
 import {
@@ -11,16 +11,9 @@ import {
   playIntroAnimation,
 } from "./config/index.js";
 
+import GameplayAtlasData from "./assets/atlases/gameplay/spritesheet.json";
+import GameplayAtlasPng from "./assets/atlases/gameplay/spritesheet.png";
 import bgImg from "./assets/bg.jpg";
-
-import appleImg from "./assets/items/apple.png";
-import bookImg from "./assets/items/book.png";
-import birdImg from "./assets/items/bird.png";
-import shoeImg from "./assets/items/shoe.png";
-
-import chairImg from "./assets/covers/chair.png";
-import cageImg from "./assets/covers/cage.png";
-import hatImg from "./assets/covers/hat.png";
 
 (async () => {
   const app = new Application();
@@ -50,16 +43,12 @@ import hatImg from "./assets/covers/hat.png";
 
   document.body.appendChild(app.canvas);
 
-  await Assets.load([
-    { alias: ASSETS_ALIAS.bg, src: bgImg },
-    { alias: ASSETS_ALIAS.apple, src: appleImg },
-    { alias: ASSETS_ALIAS.book, src: bookImg },
-    { alias: ASSETS_ALIAS.bird, src: birdImg },
-    { alias: ASSETS_ALIAS.shoe, src: shoeImg },
-    { alias: ASSETS_ALIAS.chair, src: chairImg },
-    { alias: ASSETS_ALIAS.cage, src: cageImg },
-    { alias: ASSETS_ALIAS.hat, src: hatImg },
-  ]);
+  await Assets.load({ alias: ASSETS_ALIAS.bg, src: bgImg });
+
+  const atlasTexture = await Assets.load(GameplayAtlasPng);
+
+  const gameplaySheet = new Spritesheet(atlasTexture, GameplayAtlasData);
+  await gameplaySheet.parse();
   await loadUI();
 
   const appContainer = new Container();
@@ -97,7 +86,7 @@ import hatImg from "./assets/covers/hat.png";
   }
 
   ITEMS_CONFIG.forEach((config) => {
-    const item = new Sprite(Assets.get(config.texture));
+    const item = new Sprite(gameplaySheet.textures[config.texture]);
     itemSprites[config.id] = item;
 
     item.on("pointerdown", () => {
@@ -118,7 +107,7 @@ import hatImg from "./assets/covers/hat.png";
     activeItems.push(item);
   });
   COVERS_CONFIG.forEach((config) => {
-    const item = new Sprite(Assets.get(config.texture));
+    const item = new Sprite(gameplaySheet.textures[config.texture]);
 
     placeSprite(item, config, false);
     activeItems.push(item);

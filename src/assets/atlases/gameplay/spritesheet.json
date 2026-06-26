@@ -1,0 +1,156 @@
+{
+    "frames": {
+        "apple.png": {
+            "frame": {
+                "x": 1,
+                "y": 1,
+                "w": 73,
+                "h": 76
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 73,
+                "h": 76
+            },
+            "sourceSize": {
+                "w": 73,
+                "h": 76
+            }
+        },
+        "bird.png": {
+            "frame": {
+                "x": 76,
+                "y": 1,
+                "w": 109,
+                "h": 80
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 109,
+                "h": 80
+            },
+            "sourceSize": {
+                "w": 109,
+                "h": 80
+            }
+        },
+        "book.png": {
+            "frame": {
+                "x": 187,
+                "y": 1,
+                "w": 129,
+                "h": 96
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 129,
+                "h": 96
+            },
+            "sourceSize": {
+                "w": 129,
+                "h": 96
+            }
+        },
+        "cage.png": {
+            "frame": {
+                "x": 1,
+                "y": 99,
+                "w": 275,
+                "h": 139
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 275,
+                "h": 139
+            },
+            "sourceSize": {
+                "w": 275,
+                "h": 139
+            }
+        },
+        "chair.png": {
+            "frame": {
+                "x": 318,
+                "y": 1,
+                "w": 257,
+                "h": 233
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 257,
+                "h": 233
+            },
+            "sourceSize": {
+                "w": 257,
+                "h": 233
+            }
+        },
+        "hat.png": {
+            "frame": {
+                "x": 278,
+                "y": 236,
+                "w": 144,
+                "h": 137
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 144,
+                "h": 137
+            },
+            "sourceSize": {
+                "w": 144,
+                "h": 137
+            }
+        },
+        "shoe.png": {
+            "frame": {
+                "x": 424,
+                "y": 236,
+                "w": 113,
+                "h": 77
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 113,
+                "h": 77
+            },
+            "sourceSize": {
+                "w": 113,
+                "h": 77
+            }
+        }
+    },
+    "meta": {
+        "app": "https://www.codeandweb.com/texturepacker",
+        "version": "1.0",
+        "image": "spritesheet.png",
+        "format": "RGBA8888",
+        "size": {
+            "w": 576,
+            "h": 374
+        },
+        "scale": "1",
+        "comment": "Created with TexturePacker Online (free version)\nhttps://www.codeandweb.com/texturepacker-online\n\nTexturePacker desktop offers better support for Pixi and Phaser with sprite trimming, better packing algorithms, hardware texture compression, and PNG optimization.\nTry TexturePacker desktop: https://www.codeandweb.com/texturepacker"
+    }
+}
