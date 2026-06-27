@@ -1,9 +1,16 @@
-import { ColorMatrixFilter, Graphics } from "pixi.js";
+import {
+  ColorMatrixFilter,
+  Particle,
+  ParticleContainer,
+  Texture,
+} from "pixi.js";
 import gsap from "gsap";
 
 export function playItemAnimation(item) {
   item.eventMode = "none";
   item.zIndex = 1000;
+
+  createParticles(item);
 
   const colorFilter = new ColorMatrixFilter();
   colorFilter.brightness(1.5, false);
@@ -142,4 +149,57 @@ export function playIntroAnimation(selectBannerContainer) {
     duration: 0.8,
     ease: "power2.out",
   });
+}
+
+function createParticles(item) {
+  const parent = item.parent;
+  if (!parent) return;
+
+  const particleContainer = new ParticleContainer({
+    dynamicProperties: {
+      position: true,
+      vertex: true,
+      color: true,
+    },
+  });
+  parent.addChild(particleContainer);
+
+  const particleCount = 100;
+  let activeParticles = particleCount;
+
+  for (let i = 0; i < particleCount; i++) {
+    const p = new Particle(Texture.WHITE);
+    const colors = [0xffd700, 0xff6347, 0x87cefa, 0x98fb98];
+
+    p.x = item.x;
+    p.y = item.y;
+    p.tint = colors[Math.floor(Math.random() * colors.length)];
+    p.scaleX = 10;
+    p.scaleY = 10;
+
+    particleContainer.addParticle(p);
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 75 + Math.random() * 100;
+    const targetX = p.x + Math.cos(angle) * distance;
+    const targetY = p.y + Math.sin(angle) * distance;
+
+    gsap.to(p, {
+      x: targetX,
+      y: targetY,
+      alpha: 0,
+      scaleX: 1,
+      scaleY: 1,
+      duration: 1.25 + Math.random() * 0.9,
+      ease: "power2.out",
+      onComplete: () => {
+        particleContainer.removeParticle(p);
+        activeParticles--;
+
+        if (activeParticles === 0) {
+          particleContainer.destroy();
+        }
+      },
+    });
+  }
 }
